@@ -1,0 +1,8 @@
+C:\Users\Hansrenee\source\repos\All_Windows_capslock_driver\All_Windows_capslock_driver\bin\Debug\All_Windows_capslock_driver.exe
+C:\Users\Hansrenee\source\repos\All_Windows_capslock_driver\All_Windows_capslock_driver\bin\Debug\All_Windows_capslock_driver.pdb
+C:\Users\Hansrenee\source\repos\All_Windows_capslock_driver\All_Windows_capslock_driver\obj\Debug\All_Windows_capslock_driver.csprojAssemblyReference.cache
+C:\Users\Hansrenee\source\repos\All_Windows_capslock_driver\All_Windows_capslock_driver\obj\Debug\All_Windows_capslock_driver.Properties.Resources.resources
+C:\Users\Hansrenee\source\repos\All_Windows_capslock_driver\All_Windows_capslock_driver\obj\Debug\All_Windows_capslock_driver.csproj.GenerateResource.cache
+C:\Users\Hansrenee\source\repos\All_Windows_capslock_driver\All_Windows_capslock_driver\obj\Debug\All_Windows_capslock_driver.csproj.CoreCompileInputs.cache
+C:\Users\Hansrenee\source\repos\All_Windows_capslock_driver\All_Windows_capslock_driver\obj\Debug\All_Windows_capslock_driver.exe
+C:\Users\Hansrenee\source\repos\All_Windows_capslock_driver\All_Windows_capslock_driver\obj\Debug\All_Windows_capslock_driver.pdb
