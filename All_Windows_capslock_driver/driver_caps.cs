@@ -3,11 +3,20 @@ using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Forms;
+/// <summary>
+/// Objek Driver
+/// Utilisasi Win32 API Windows 
+/// Utilizing windows 32 API for low level hooks
+/// ChronomeDev 2020
+/// Direktif error pada variabel utama kelas ini di disable
+/// Primary variable properties for this class are disabled with pragma directives
+/// </summary>
 
 namespace All_Windows_capslock_driver
 {
     class driver_caps : IDisposable
     {
+        #pragma warning disable
         public Boolean isShow;
         private Form capslockUI;
         bool Global = false; // apakah hook secara global untuk utilisasinya
@@ -20,6 +29,7 @@ namespace All_Windows_capslock_driver
         private int HookID = 0;
         CallbackEventAmbil cb_ambilkey = null;
 
+        #pragma warning restore
         ////import DLL//////////////////
 
         [DllImport("user32", CallingConvention = CallingConvention.StdCall)]
