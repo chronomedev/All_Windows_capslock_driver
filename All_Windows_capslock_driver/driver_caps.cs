@@ -77,29 +77,9 @@ namespace All_Windows_capslock_driver
         private void T_alertCapsLock(Boolean nyala)
         {
 
-            //capslockUI = new Form();
-            //capslockUI.ControlBox = false;
-            //capslockUI.Height = 150;
-            //capslockUI.Width = 390;
-            //capslockUI.Icon = null;
-            //capslockUI.Text = "Chronome Driver";
-            //Label lbl1 = new Label();
-            //lbl1.Location = new Point(12, 36);
-            //if (nyala)
-            //{
-            //    lbl1.Text = "A";
-            //} else
-            //{
-            //    lbl1.Text = "a";
-            //}
-            //lbl1.TextAlign = ContentAlignment.MiddleCenter;
-            //capslockUI.Controls.Add(lbl1);
-            //lbl1.Text = "EHHH";
-
-            //capslockUI.ShowDialog();
-
             string ui_label = null;
-            Label lbl1 = new Label();
+            Console.WriteLine("THREAD ALERT MASUK!!!! nyala======" + nyala);
+            
             if (nyala)
             {
                 ui_label = "A";
@@ -118,11 +98,12 @@ namespace All_Windows_capslock_driver
             }
             else
             {
-
+                Label lbl1 = new Label();
+                lbl1.Font = new Font("Microsoft Sans Series", 17, FontStyle.Bold);
                 capslockUI = new Form();
                 capslockUI.ControlBox = false;
                 capslockUI.Height = 150;
-                capslockUI.Width = 390;
+                capslockUI.Width = 100;
                 capslockUI.Icon = null;
                 capslockUI.Text = "Chronome Driver";
                 lbl1.Location = new Point(12, 36);
@@ -134,7 +115,7 @@ namespace All_Windows_capslock_driver
             }
         }
 
-        // Thread
+        // Thread close UI driver
         private void T_closeUI()
         {
 
@@ -172,8 +153,11 @@ namespace All_Windows_capslock_driver
 
                     if (keycodeRekamLowLevel == 20)
                     {
+                        // variabel tampung karena ada delay dari hook terhadap thread agar konsisten
+                        Boolean hasilCapsLock = GetCapslock(); 
+                        Console.WriteLine(hasilCapsLock);
                         // lambda thread ui untuk show
-                        t1 = new Thread(() => T_alertCapsLock(GetCapslock()));
+                        t1 = new Thread(() => T_alertCapsLock(hasilCapsLock));
                         t2 = new Thread(T_closeUI);
 
                         t1.Start();
@@ -182,7 +166,7 @@ namespace All_Windows_capslock_driver
                             t2.Start();
                         }
 
-                        Console.WriteLine(GetCapslock());
+                        //Console.WriteLine(GetCapslock());
                         //MessageBox.Show("Masuk wee");
                         Console.WriteLine("MASUK caps");
                     }
@@ -222,7 +206,7 @@ namespace All_Windows_capslock_driver
 
         public static bool GetCapslock()
         {
-            // mengambil state sebelumnya os windows trigger event langsung aktif
+            // mengambil state sebelumnya, jadi di buat negasi bool aja sesuai indikator os windows trigger event langsung aktif
             if (Convert.ToBoolean(GetKeyState(System.Windows.Forms.Keys.CapsLock)) == false)
             {
                 return true;
