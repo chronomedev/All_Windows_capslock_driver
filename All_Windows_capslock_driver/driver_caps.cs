@@ -114,6 +114,7 @@ namespace All_Windows_capslock_driver
                 Label lbl1 = new Label();
                 lbl1.Font = new Font("Microsoft Sans Series", 17, FontStyle.Bold);
                 capslockUI = new Form();
+                capslockUI.ShowInTaskbar = false;
                 capslockUI.ControlBox = false;
                 capslockUI.Height = 150;
                 capslockUI.Width = 100;

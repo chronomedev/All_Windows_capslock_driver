@@ -14,7 +14,6 @@ namespace All_Windows_capslock_driver
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-
             driver_caps driver_chronome = new driver_caps(true);
             
             Application.Run();
