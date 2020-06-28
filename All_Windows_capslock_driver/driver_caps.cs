@@ -18,11 +18,14 @@ namespace All_Windows_capslock_driver
     {
         #pragma warning disable
         public Boolean isShow;
-        private Form capslockUI;
+        //private Form capslockUI;
+        Form1 capslockUI;
         bool Global = false; // apakah hook secara global untuk utilisasinya
         public delegate void LocalKeyEventHandler(Keys key, bool Shift, bool Ctrl, bool Alt);
         public event LocalKeyEventHandler KeyDown;
         public event LocalKeyEventHandler KeyUp;
+
+
 
         // callback nanti yang jadi referensi objek hook
         public delegate int CallbackEventAmbil(int Code, int W, int L);
@@ -87,16 +90,19 @@ namespace All_Windows_capslock_driver
         private void T_alertCapsLock(Boolean nyala)
         {
 
-            string ui_label = null;
+            string ui_caps = null;
+            string ui_keterangan = null;
             Console.WriteLine("THREAD ALERT MASUK!!!! nyala======" + nyala);
             
             if (nyala)
             {
-                ui_label = "A";
+                ui_caps = "A";
+                ui_keterangan = "Caps Lock Hidup";
             }
             else
             {
-                ui_label = "a";
+                ui_caps = "a";
+                ui_keterangan = "Caps Lock Mati";
             }
 
             // jika perubahan dilakukan user ketika thread UI masih hidup agar tidak melakukan 
@@ -104,30 +110,37 @@ namespace All_Windows_capslock_driver
             if (isShow) 
             {
                 capslockUI.Invoke((MethodInvoker)delegate {
-                    capslockUI.Controls[0].Text = ui_label;
+                    capslockUI.Controls[3].Text =ui_caps;
+                    capslockUI.Controls[2].Text = ui_keterangan;
                     capslockUI.Activate();
                 });
 
             }
             else
             {
-                Label lbl1 = new Label();
-                lbl1.Font = new Font("Microsoft Sans Series", 17, FontStyle.Bold);
-                capslockUI = new Form();
-                capslockUI.ShowInTaskbar = false;
-                capslockUI.ControlBox = false;
-                capslockUI.Height = 150;
-                capslockUI.Width = 100;
-                capslockUI.Icon = null;
-                capslockUI.Text = "Chronome Driver";
-                capslockUI.Location = new Point(0, 100);
-                capslockUI.StartPosition = FormStartPosition.Manual;
+                //Label lbl1 = new Label();
+                //lbl1.Font = new Font("Microsoft Sans Series", 17, FontStyle.Bold);
+                //capslockUI = new Form();
+                //capslockUI.ShowInTaskbar = false;
+                //capslockUI.ControlBox = false;
+                //capslockUI.Height = 150;
+                //capslockUI.Width = 100;
+                //capslockUI.Icon = null;
+                //capslockUI.Text = "Chronome Driver";
+                //capslockUI.Location = new Point(0, 100);
+                //capslockUI.StartPosition = FormStartPosition.Manual;
 
-                lbl1.Location = new Point(12, 36);
-                lbl1.TextAlign = ContentAlignment.MiddleCenter;
-                lbl1.Text = ui_label;
-                capslockUI.Controls.Add(lbl1);
+                //lbl1.Location = new Point(12, 36);
+                //lbl1.TextAlign = ContentAlignment.MiddleCenter;
+                //lbl1.Text = ui_label;
+                //capslockUI.Controls.Add(lbl1);
                 isShow = true;
+
+                capslockUI = new Form1();
+                //capslockUI.Invoke((MethodInvoker)delegate {
+                    capslockUI.Controls[3].Text = ui_caps;
+                    capslockUI.Controls[2].Text = ui_keterangan;
+                //});
 
                 // tampil agar selalu didepan
                 capslockUI.Activate();
@@ -146,6 +159,10 @@ namespace All_Windows_capslock_driver
                 isShow = false;
             });
 
+            // Optimasi Memory
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+            GC.Collect();
         }
 
         //buat listener call back biar event key hook jalan
