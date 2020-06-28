@@ -89,10 +89,12 @@ namespace All_Windows_capslock_driver
                 ui_label = "a";
             }
 
-            if (isShow)
+            if (isShow) // jika perubahan dilakukan user ketika thread UI masih hidup agar tidak melakukan 
+                //pemborosan objek dialog memori dan dinamis
             {
                 capslockUI.Invoke((MethodInvoker)delegate {
                     capslockUI.Controls[0].Text = ui_label;
+                    capslockUI.Activate();
                 });
 
             }
@@ -111,6 +113,8 @@ namespace All_Windows_capslock_driver
                 lbl1.Text = ui_label;
                 capslockUI.Controls.Add(lbl1);
                 isShow = true;
+                // tampil agar selalu didepan
+                capslockUI.Activate();
                 capslockUI.ShowDialog();
             }
         }
@@ -118,7 +122,7 @@ namespace All_Windows_capslock_driver
         // Thread close UI driver
         private void T_closeUI()
         {
-
+            
             Thread.Sleep(3000);
             capslockUI.Invoke((MethodInvoker)delegate {
                 capslockUI.Close();
@@ -198,15 +202,16 @@ namespace All_Windows_capslock_driver
             SKeyDown = 0x0104,
             SKeyUp = 0x0105
         }
-
-        [DllImport("user32.dll")] // import dll kusus state key biasa yang spesial buat shortcut dan sejenisnya seperti capslock ctrl
+        // import dll kusus state key biasa yang spesial buat shortcut dan sejenisnya seperti capslock ctrl
+        [DllImport("user32.dll")] 
 
         // Deklarasi sesuai nama fungsinya pada dll
         static public extern short GetKeyState(System.Windows.Forms.Keys key_spesial);
 
         public static bool GetCapslock()
         {
-            // mengambil state sebelumnya, jadi di buat negasi bool aja sesuai indikator os windows trigger event langsung aktif
+            // mengambil state sebelumnya, jadi di buat negasi bool aja sesuai indikator 
+            //os windows trigger event langsung aktif
             if (Convert.ToBoolean(GetKeyState(System.Windows.Forms.Keys.CapsLock)) == false)
             {
                 return true;
