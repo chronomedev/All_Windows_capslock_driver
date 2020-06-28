@@ -99,8 +99,9 @@ namespace All_Windows_capslock_driver
                 ui_label = "a";
             }
 
-            if (isShow) // jika perubahan dilakukan user ketika thread UI masih hidup agar tidak melakukan 
-                //pemborosan objek dialog memori dan dinamis
+            // jika perubahan dilakukan user ketika thread UI masih hidup agar tidak melakukan 
+            //pemborosan objek dialog memori dan dinamis
+            if (isShow) 
             {
                 capslockUI.Invoke((MethodInvoker)delegate {
                     capslockUI.Controls[0].Text = ui_label;
@@ -118,14 +119,19 @@ namespace All_Windows_capslock_driver
                 capslockUI.Width = 100;
                 capslockUI.Icon = null;
                 capslockUI.Text = "Chronome Driver";
+                capslockUI.Location = new Point(0, 100);
+                capslockUI.StartPosition = FormStartPosition.Manual;
+
                 lbl1.Location = new Point(12, 36);
                 lbl1.TextAlign = ContentAlignment.MiddleCenter;
                 lbl1.Text = ui_label;
                 capslockUI.Controls.Add(lbl1);
                 isShow = true;
+
                 // tampil agar selalu didepan
                 capslockUI.Activate();
                 capslockUI.ShowDialog();
+
             }
         }
 
