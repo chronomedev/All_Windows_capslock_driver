@@ -1,11 +1,15 @@
 ﻿using System;
+using System.Drawing;
 using System.Runtime.InteropServices;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace All_Windows_capslock_driver
 {
     class driver_caps : IDisposable
     {
+        public Boolean isShow;
+        private Form capslockUI;
         bool Global = false; // apakah hook secara global untuk utilisasinya
         public delegate void LocalKeyEventHandler(Keys key, bool Shift, bool Ctrl, bool Alt);
         public event LocalKeyEventHandler KeyDown;
@@ -14,8 +18,7 @@ namespace All_Windows_capslock_driver
         // callback nanti yang jadi referensi objek hook
         public delegate int CallbackEventAmbil(int Code, int W, int L);
         private int HookID = 0;
-        CallbackEventAmbil cb_ambilkey = null; 
-
+        CallbackEventAmbil cb_ambilkey = null;
 
         ////import DLL//////////////////
 
@@ -30,7 +33,6 @@ namespace All_Windows_capslock_driver
 
         [DllImport("kernel32.dll", CallingConvention = CallingConvention.StdCall)]
         private static extern int GetCurrentThreadId();
-
 
         //Type enum sesuai win API
         public enum HookType : int
@@ -55,22 +57,94 @@ namespace All_Windows_capslock_driver
         //Konstruktor Hook
         public driver_caps(bool global)
         {
+            isShow = false;
             this.Global = global;
             cb_ambilkey = new CallbackEventAmbil(rekamEventHook);
             if (global)
             {
                 //Hook secara global ke thread tunggu via dll low level
                 HookID = SetWindowsHookEx(HookType.WH_KEYBOARD_LL, cb_ambilkey, 0, 0); // ambil id hook di envi
-                                                                                    
+
             }
             else
             {
                 // Hook non global manggil event up dan down ke message (ruang lingkup aplikasi)
-                HookID = SetWindowsHookEx(HookType.WH_KEYBOARD, cb_ambilkey,0, GetCurrentThreadId()); 
+                HookID = SetWindowsHookEx(HookType.WH_KEYBOARD, cb_ambilkey, 0, GetCurrentThreadId());
             }
         }
 
+        // Thread Buat window / UI Alert capslocknya
+        private void T_alertCapsLock(Boolean nyala)
+        {
 
+            //capslockUI = new Form();
+            //capslockUI.ControlBox = false;
+            //capslockUI.Height = 150;
+            //capslockUI.Width = 390;
+            //capslockUI.Icon = null;
+            //capslockUI.Text = "Chronome Driver";
+            //Label lbl1 = new Label();
+            //lbl1.Location = new Point(12, 36);
+            //if (nyala)
+            //{
+            //    lbl1.Text = "A";
+            //} else
+            //{
+            //    lbl1.Text = "a";
+            //}
+            //lbl1.TextAlign = ContentAlignment.MiddleCenter;
+            //capslockUI.Controls.Add(lbl1);
+            //lbl1.Text = "EHHH";
+
+            //capslockUI.ShowDialog();
+
+            string ui_label = null;
+            Label lbl1 = new Label();
+            if (nyala)
+            {
+                ui_label = "A";
+            }
+            else
+            {
+                ui_label = "a";
+            }
+
+            if (isShow)
+            {
+                capslockUI.Invoke((MethodInvoker)delegate {
+                    capslockUI.Controls[0].Text = ui_label;
+                });
+
+            }
+            else
+            {
+
+                capslockUI = new Form();
+                capslockUI.ControlBox = false;
+                capslockUI.Height = 150;
+                capslockUI.Width = 390;
+                capslockUI.Icon = null;
+                capslockUI.Text = "Chronome Driver";
+                lbl1.Location = new Point(12, 36);
+                lbl1.TextAlign = ContentAlignment.MiddleCenter;
+                lbl1.Text = ui_label;
+                capslockUI.Controls.Add(lbl1);
+                isShow = true;
+                capslockUI.ShowDialog();
+            }
+        }
+
+        // Thread
+        private void T_closeUI()
+        {
+
+            Thread.Sleep(3000);
+            capslockUI.Invoke((MethodInvoker)delegate {
+                capslockUI.Close();
+                isShow = false;
+            });
+
+        }
 
         //buat listener call back biar event key hook jalan
         private int rekamEventHook(int Code, int W, int L)
@@ -80,35 +154,49 @@ namespace All_Windows_capslock_driver
                 return CallNextHookEx(HookID, Code, W, L);
             }
             try
-            {                
-                    KeyEvents kEvent = (KeyEvents)W;
+            {
+                Thread t1;
+                Thread t2;
+                KeyEvents kEvent = (KeyEvents)W;
 
-                    // rekam 32 bit integer keycode low level 
-                    Int32 keycodeRekamLowLevel = Marshal.ReadInt32((IntPtr)L);
-                    //Console.WriteLine("code rekam---" + keycodeRekamLowLevel);
-                    //Console.WriteLine(GetCapslock());
+                // rekam 32 bit integer keycode low level 
+                Int32 keycodeRekamLowLevel = Marshal.ReadInt32((IntPtr)L);
+                //Console.WriteLine("code rekam---" + keycodeRekamLowLevel);
+                //Console.WriteLine(GetCapslock());
 
-                    if (kEvent == KeyEvents.KeyDown || kEvent == KeyEvents.SKeyDown)
+                if (kEvent == KeyEvents.KeyDown || kEvent == KeyEvents.SKeyDown)
+                {
+                    Console.WriteLine("MASUK DOWN");
+                    //if (KeyDown != null)
+                    //{
+
+                    if (keycodeRekamLowLevel == 20)
                     {
-                        Console.WriteLine("MASUK DOWN");
-                        //if (KeyDown != null)
-                        //{
-                            
-                            if (keycodeRekamLowLevel == 20)
-                            {
-                                Console.WriteLine(GetCapslock());
-                            }
+                        // lambda thread ui untuk show
+                        t1 = new Thread(() => T_alertCapsLock(GetCapslock()));
+                        t2 = new Thread(T_closeUI);
 
-                        //}
-                    }
-                    if (kEvent == KeyEvents.KeyUp || kEvent == KeyEvents.SKeyUp)
-                    {
-                        if (KeyUp != null)
+                        t1.Start();
+                        if (isShow == false)
                         {
-                            // Event keyup yang tidak null fungsinya sesuai kedepannya
+                            t2.Start();
                         }
+
+                        Console.WriteLine(GetCapslock());
+                        //MessageBox.Show("Masuk wee");
+                        Console.WriteLine("MASUK caps");
                     }
-                
+
+                    //}
+                }
+                if (kEvent == KeyEvents.KeyUp || kEvent == KeyEvents.SKeyUp)
+                {
+                    if (KeyUp != null)
+                    {
+                        // Event keyup yang tidak null fungsinya sesuai kedepannya
+                    }
+                }
+
             }
             catch (Exception e)
             {
@@ -128,7 +216,8 @@ namespace All_Windows_capslock_driver
         }
 
         [DllImport("user32.dll")] // import dll kusus state key biasa yang spesial buat shortcut dan sejenisnya seperti capslock ctrl
-                                  // Deklarasi sesuai nama fungsinya
+
+        // Deklarasi sesuai nama fungsinya pada dll
         static public extern short GetKeyState(System.Windows.Forms.Keys key_spesial);
 
         public static bool GetCapslock()
