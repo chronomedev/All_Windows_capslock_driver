@@ -96,6 +96,7 @@
             this.Name = "Form1";
             this.Opacity = 0.93D;
             this.Text = "Form1";
+            this.TopMost = true;
             this.ResumeLayout(false);
             this.PerformLayout();
 

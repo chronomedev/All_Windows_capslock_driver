@@ -33,7 +33,7 @@ namespace All_Windows_capslock_driver
         CallbackEventAmbil cb_ambilkey = null;
 
         #pragma warning restore
-        ////import DLL//////////////////
+        ////import DLL sistem operasi win32 buat manggil functionnya//////////////////
 
         [DllImport("user32", CallingConvention = CallingConvention.StdCall)]
         private static extern int SetWindowsHookEx(HookType idHook, CallbackEventAmbil lpfn, int hInstance, int threadId);
@@ -46,6 +46,11 @@ namespace All_Windows_capslock_driver
 
         [DllImport("kernel32.dll", CallingConvention = CallingConvention.StdCall)]
         private static extern int GetCurrentThreadId();
+
+        // import dll kusus state key biasa yang spesial buat shortcut dan sejenisnya seperti capslock ctrl
+        [DllImport("user32.dll")]
+        static public extern short GetKeyState(System.Windows.Forms.Keys key_spesial);
+
 
         //Type enum sesuai win API
         public enum HookType : int
@@ -110,9 +115,10 @@ namespace All_Windows_capslock_driver
             if (isShow) 
             {
                 capslockUI.Invoke((MethodInvoker)delegate {
+                    capslockUI.TopMost = true;
                     capslockUI.Controls[3].Text =ui_caps;
                     capslockUI.Controls[2].Text = ui_keterangan;
-                    capslockUI.Activate();
+                    //capslockUI.Activate();
                 });
 
             }
@@ -143,7 +149,8 @@ namespace All_Windows_capslock_driver
                 //});
 
                 // tampil agar selalu didepan
-                capslockUI.Activate();
+                //capslockUI.Activate();
+                capslockUI.TopMost = true;
                 capslockUI.ShowDialog();
 
             }
@@ -178,7 +185,7 @@ namespace All_Windows_capslock_driver
                 Thread t2;
                 KeyEvents kEvent = (KeyEvents)W;
 
-                // rekam 32 bit integer keycode low level 
+                // rekam 32 bit integer buat pointer keycode low level 
                 Int32 keycodeRekamLowLevel = Marshal.ReadInt32((IntPtr)L);
                 //Console.WriteLine("code rekam---" + keycodeRekamLowLevel);
                 //Console.WriteLine(GetCapslock());
@@ -236,11 +243,6 @@ namespace All_Windows_capslock_driver
             SKeyDown = 0x0104,
             SKeyUp = 0x0105
         }
-        // import dll kusus state key biasa yang spesial buat shortcut dan sejenisnya seperti capslock ctrl
-        [DllImport("user32.dll")] 
-
-        // Deklarasi sesuai nama fungsinya pada dll
-        static public extern short GetKeyState(System.Windows.Forms.Keys key_spesial);
 
         public static bool GetCapslock()
         {
