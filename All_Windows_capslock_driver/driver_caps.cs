@@ -111,11 +111,11 @@ namespace All_Windows_capslock_driver
             }
 
             // jika perubahan dilakukan user ketika thread UI masih hidup agar tidak melakukan 
-            //pemborosan objek dialog memori dan dinamis
+            // pemborosan objek dialog memori dan dinamis
             if (isShow) 
             {
                 capslockUI.Invoke((MethodInvoker)delegate {
-                    capslockUI.TopMost = true;
+                    //capslockUI.TopMost = true;
                     capslockUI.Controls[3].Text =ui_caps;
                     capslockUI.Controls[2].Text = ui_keterangan;
                     //capslockUI.Activate();
@@ -150,11 +150,12 @@ namespace All_Windows_capslock_driver
 
                 // tampil agar selalu didepan
                 //capslockUI.Activate();
-                capslockUI.TopMost = true;
+                //capslockUI.TopMost = true;
                 capslockUI.ShowDialog();
 
             }
         }
+
 
         // Thread close UI driver
         private void T_closeUI()
