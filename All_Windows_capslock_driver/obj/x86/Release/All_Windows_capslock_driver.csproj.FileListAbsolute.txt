@@ -1,0 +1,12 @@
+C:\Users\Hansrenee\source\repos\testingwpf\All_Windows_capslock_driver\All_Windows_capslock_driver\obj\x86\Release\All_Windows_capslock_driver.csprojAssemblyReference.cache
+C:\Users\Hansrenee\source\repos\testingwpf\All_Windows_capslock_driver\All_Windows_capslock_driver\obj\x86\Release\All_Windows_capslock_driver.Form1.resources
+C:\Users\Hansrenee\source\repos\testingwpf\All_Windows_capslock_driver\All_Windows_capslock_driver\obj\x86\Release\All_Windows_capslock_driver.Properties.Resources.resources
+C:\Users\Hansrenee\source\repos\testingwpf\All_Windows_capslock_driver\All_Windows_capslock_driver\obj\x86\Release\All_Windows_capslock_driver.csproj.GenerateResource.cache
+C:\Users\Hansrenee\source\repos\testingwpf\All_Windows_capslock_driver\All_Windows_capslock_driver\obj\x86\Release\All_Windows_capslock_driver.csproj.CoreCompileInputs.cache
+C:\Users\Hansrenee\source\repos\testingwpf\All_Windows_capslock_driver\All_Windows_capslock_driver\bin\x86\Release\chrservice.exe.manifest
+C:\Users\Hansrenee\source\repos\testingwpf\All_Windows_capslock_driver\All_Windows_capslock_driver\bin\x86\Release\chrservice.application
+C:\Users\Hansrenee\source\repos\testingwpf\All_Windows_capslock_driver\All_Windows_capslock_driver\bin\x86\Release\chrservice.exe
+C:\Users\Hansrenee\source\repos\testingwpf\All_Windows_capslock_driver\All_Windows_capslock_driver\obj\x86\Release\chrservice.TrustInfo.xml
+C:\Users\Hansrenee\source\repos\testingwpf\All_Windows_capslock_driver\All_Windows_capslock_driver\obj\x86\Release\chrservice.exe.manifest
+C:\Users\Hansrenee\source\repos\testingwpf\All_Windows_capslock_driver\All_Windows_capslock_driver\obj\x86\Release\chrservice.application
+C:\Users\Hansrenee\source\repos\testingwpf\All_Windows_capslock_driver\All_Windows_capslock_driver\obj\x86\Release\chrservice.exe

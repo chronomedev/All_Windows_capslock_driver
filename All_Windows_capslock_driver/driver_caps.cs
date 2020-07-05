@@ -112,11 +112,12 @@ namespace All_Windows_capslock_driver
 
             // jika perubahan dilakukan user ketika thread UI masih hidup agar tidak melakukan 
             // pemborosan objek dialog memori dan dinamis
+            Console.WriteLine("IS SHOW DI THREAD TAMPIL-----" + isShow);
             if (isShow) 
             {
                 capslockUI.Invoke((MethodInvoker)delegate {
                     //capslockUI.TopMost = true;
-                    capslockUI.Controls[3].Text =ui_caps;
+                    capslockUI.Controls[3].Text = ui_caps;
                     capslockUI.Controls[2].Text = ui_keterangan;
                     //capslockUI.Activate();
                 });
@@ -151,7 +152,9 @@ namespace All_Windows_capslock_driver
                 // tampil agar selalu didepan
                 //capslockUI.Activate();
                 //capslockUI.TopMost = true;
+                isShow = true;
                 capslockUI.ShowDialog();
+
 
             }
         }
@@ -160,12 +163,16 @@ namespace All_Windows_capslock_driver
         // Thread close UI driver
         private void T_closeUI()
         {
-            
-            Thread.Sleep(3000);
-            capslockUI.Invoke((MethodInvoker)delegate {
-                capslockUI.Close();
-                isShow = false;
-            });
+            //if (isShow)
+            //{
+                Console.Write("THREAD CLOSE MASUK!!!!!");
+                Thread.Sleep(3000);
+                capslockUI.Invoke((MethodInvoker)delegate {
+                    capslockUI.Close();
+                    isShow = false;
+                });
+            //}
+
 
             // Optimasi Memory
             GC.Collect();
@@ -204,12 +211,18 @@ namespace All_Windows_capslock_driver
                         Console.WriteLine(hasilCapsLock);
                         // lambda thread ui untuk show
                         t1 = new Thread(() => T_alertCapsLock(hasilCapsLock));
-                        t2 = new Thread(T_closeUI);
+                        
 
-                        t1.Start();
+                        
+                        Console.WriteLine("IS SHOW DI MAIN THREAD----" + isShow);
                         if (isShow == false)
                         {
+                            t1.Start();
+                            t2 = new Thread(T_closeUI);
                             t2.Start();
+                        } else
+                        {
+                            t1.Start();
                         }
 
                         //Console.WriteLine(GetCapslock());

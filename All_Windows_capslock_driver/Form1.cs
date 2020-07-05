@@ -23,6 +23,7 @@ namespace All_Windows_capslock_driver
         private void Form1_Shown(object sender, EventArgs e)
         {
             this.TopMost = true;
+            
         }
     }
 }
