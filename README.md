@@ -1,4 +1,4 @@
-# All_Windows_capslock_driver
+# All Windows capslock driver
 General high level capslock driver indicator driver for windows
 
 Driver high level capslock indicator with 2 Threads control
