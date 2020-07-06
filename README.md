@@ -6,7 +6,7 @@ utilisasi win32 API
 
 
 # Installation (Instalasi):
-1. Go to release section of this reposiroty (Masuk kebagian release atau rilis)
+1. Go to the release section of this reposiroty (Masuk kebagian release atau rilis)
 2. Download the latest version or desired one (Download sesuai versi yang diinginkan)
 3. Run the install.bat script with administrator privilage (Jalankan script bat bernama install atau klik file bernama install dan pastikan dalam hak administrator)
 4. Follow Shell Installation Instruction (Ikuti Instruksi instalasi)
