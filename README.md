@@ -15,7 +15,7 @@ utilisasi win32 API
 
 
 If you find some kind of anomaly behaviour because of this driver or the driver it self, just contact the developer so the bugs or defect can be resolved.
-(Apakah yang setelah menggunakan driver ini terjadi keanehan atau ketidak wajaran atau bug dari driver, hubungi developer agar dilakukan pembetulan
+(Apakah yang setelah menggunakan driver ini terjadi keanehan atau ketidak wajaran atau bug dari driver, hubungi developer agar dilakukan pembetulan)
 
 
 
