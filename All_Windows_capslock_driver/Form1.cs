@@ -1,6 +1,10 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+/// <summary>
+/// Driver indicator UI code
+/// ChronomeDev 2020
+/// </summary>
 
 namespace All_Windows_capslock_driver
 {
@@ -8,16 +12,13 @@ namespace All_Windows_capslock_driver
     {
         public Form1()
         {
+            
             InitializeComponent();
             this.ShowInTaskbar = false;
-            this.Location = new Point(0, 100);
             this.StartPosition = FormStartPosition.Manual;
+            int[] output = layar.akhir();
+            this.Location = new Point(output[0] - (this.Size.Width/2), output[1] - (this.Size.Height/2));   
 
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            
         }
 
         private void Form1_Shown(object sender, EventArgs e)

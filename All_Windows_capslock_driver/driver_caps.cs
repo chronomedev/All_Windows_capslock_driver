@@ -73,6 +73,7 @@ namespace All_Windows_capslock_driver
         }
 
         //Konstruktor Hook
+        //parameter lowlevel input atau tidak
         public driver_caps(bool global)
         {
             isShow = false;

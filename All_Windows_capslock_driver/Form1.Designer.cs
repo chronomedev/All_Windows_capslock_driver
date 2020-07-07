@@ -94,7 +94,7 @@
             this.ForeColor = System.Drawing.Color.LightSkyBlue;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "Form1";
-            this.Opacity = 0.93D;
+            this.Opacity = 0.85D;
             this.Text = "Form1";
             this.TopMost = true;
             this.Shown += new System.EventHandler(this.Form1_Shown);

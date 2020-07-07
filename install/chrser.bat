@@ -1,7 +1,6 @@
 REM Installer Chronome CapsLock general Driver 2020
 REM ChronomeDev 2020
 REM ========== HARAP TUNGGU ========================
-%cd%
 @echo off
 PowerShell -Command "Add-Type -AssemblyName PresentationFramework;[System.Windows.MessageBox]::Show('Selamat Datang pada instalasi Shell ini', 'ChronomeDriver')"
 cls
